@@ -20,6 +20,10 @@ namespace api.Controllers
             {
                 return new TriviaResponse { Text = "The number of the beast.", Number = 666, Found = true, Type = "hardcoded trivia" };
             }
+            if(number == 1337)
+            {
+                return new TriviaResponse { Text = "The number of the leet.", Number = 1337, Found = true, Type = "hardcoded trivia" };
+            }
 
             var httpClient = new HttpClient();
             var response = await httpClient.GetAsync($"http://numbersapi.com/{number}?json");
