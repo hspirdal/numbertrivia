@@ -16,6 +16,11 @@ namespace api.Controllers
         [HttpGet("{number}")]
         public async Task<TriviaResponse> GetTriviaAsync(int number)
         {
+            if(number == 666)
+            {
+                return new TriviaResponse { Text = "The number of the beast.", Number = 666, Found = true, Type = "hardcoded trivia" };
+            }
+
             var httpClient = new HttpClient();
             var response = await httpClient.GetAsync($"http://numbersapi.com/{number}?json");
             var triviaResult = await response.Content.ReadAsStringAsync();
