@@ -2,7 +2,14 @@ version: '2'
  
 services:
   app:
-    image: hspirdal/numbertriviaapi
+    image: hspirdal/numbertrivia.web
+    build:
+      context:  ./source/web
+      dockerfile: Dockerfile
+    expose:
+      - "8080"
+  api:
+    image: hspirdal/numbertrivia.api
     build:
       context:  ./source/api
       dockerfile: Dockerfile
@@ -10,7 +17,7 @@ services:
       - "8081"
  
   proxy:
-    image: hspirdal/nginx
+    image: hspirdal/numbertrivia.nginx
     build:
       context:  ./source/nginx
       dockerfile: Dockerfile
@@ -18,3 +25,4 @@ services:
       - "80:80"
     links:
       - app
+      - api
