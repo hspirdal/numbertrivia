@@ -1,13 +1,10 @@
 FROM microsoft/aspnetcore-build:2.0 AS build-env
-WORKDIR /app
 
-# Copy csproj and restore as distinct layers
-COPY *.csproj ./
-RUN dotnet restore
+WORKDIR /src
+COPY . .
 
-# Copy everything else and build
-COPY . ./
-RUN dotnet publish -c Release -o out
+WORKDIR /src/web
+RUN dotnet publish -c Release -o /app/out
 
 # Build runtime image
 FROM microsoft/aspnetcore:2.0
@@ -15,6 +12,7 @@ WORKDIR /app
 COPY --from=build-env /app/out .
 
 ENV ASPNETCORE_URLS http://+:8080
+ENV ASPNETCORE_ENVIRONMENT Development
 EXPOSE 8080
 
 ENTRYPOINT ["dotnet", "web.dll"]

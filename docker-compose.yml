@@ -4,15 +4,15 @@ services:
   app:
     image: hspirdal/numbertrivia.web
     build:
-      context:  ./source/web
-      dockerfile: Dockerfile
+      context:  ./source
+      dockerfile: ./web/Dockerfile
     expose:
       - "8080"
   api:
     image: hspirdal/numbertrivia.api
     build:
-      context:  ./source/api
-      dockerfile: Dockerfile
+      context:  ./source
+      dockerfile: ./api/Dockerfile
     expose:
       - "8081"
  
