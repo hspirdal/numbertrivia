@@ -1,19 +1,26 @@
 version: '2'
- 
+
 services:
   app:
     image: hspirdal/numbertrivia.web
+    environment:
+      - BaseUrl=http://override.this
     expose:
       - "8080"
   api:
     image: hspirdal/numbertrivia.api
     expose:
       - "8081"
- 
+
   proxy:
     image: hspirdal/numbertrivia.nginx
     ports:
       - "80:80"
+      - "443:443"
+    volumes:
+      - ./dh-param/dhparam-2048.pem:/etc/ssl/certs/dhparam-2048.pem
+      - /docker-volumes/somepath/yoursite/fullchain.pem:/etc/somepath/yoursite/fullchain.pem
+      - /docker-volumes/somepath/yoursite/privkey.pem:/etc/somepath/yoursite/privkey.pem
     links:
       - app
       - api

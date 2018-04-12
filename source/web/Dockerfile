@@ -1,7 +1,7 @@
 FROM microsoft/aspnetcore-build:2.0 AS build-env
 
 WORKDIR /src
-COPY . .
+COPY web web
 
 WORKDIR /src/web
 RUN dotnet publish -c Release -o /app/out
