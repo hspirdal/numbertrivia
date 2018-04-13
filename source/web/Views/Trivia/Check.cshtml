@@ -1,0 +1,22 @@
+@{
+    ViewData["Title"] = "Number trivia";
+    @model web.ViewModels.NumberTrivia
+}
+
+
+<h1>Number Trivia</h1>
+@if(!string.IsNullOrEmpty(@Model.Text)) {
+    <p>@Model.Text</p>
+}
+
+<div class="row">
+    <div class="col-md 6">
+        <form asp-action="Check" method="post">
+            <div class="form-group">
+                <label>Number to check:</label>
+                <input type="text" name="number" autofocus="autofocus">
+            </div>
+            <button type="submit" class="btn btn-success">Check</button>
+        </form>
+    </div>
+</div>
