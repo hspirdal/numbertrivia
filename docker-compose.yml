@@ -1,8 +1,11 @@
-version: '2'
+version: '3'
  
 services:
   app:
     image: hspirdal/numbertrivia.web
+    environment:
+      - BaseUrl=http://api:8081
+      - TriviaUrl=api/trivia
     build:
       context:  ./source
       dockerfile: ./web/Dockerfile
@@ -20,7 +23,7 @@ services:
     image: hspirdal/numbertrivia.nginx
     build:
       context:  ./source/nginx
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.debug
     ports:
       - "80:80"
     links:

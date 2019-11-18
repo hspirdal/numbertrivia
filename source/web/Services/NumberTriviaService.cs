@@ -24,7 +24,9 @@ namespace web.Services
         public async Task<NumberTrivia> GetNumberAsync(int number)
         {
             var httpClient = new HttpClient();
-            var response = await httpClient.GetAsync($"{_apiConfig.BaseUrl}/{_apiConfig.NumberTriviaApiUrl}/{number}");
+            var request = $"{_apiConfig.BaseUrl}/{_apiConfig.TriviaUrl}/{number}";
+            Console.WriteLine($"Request to API: {request}");
+            var response = await httpClient.GetAsync(request);
             var triviaResult = await response.Content.ReadAsStringAsync();
             var numberTrivia = JsonConvert.DeserializeObject<NumberTrivia>(triviaResult);
             return numberTrivia;

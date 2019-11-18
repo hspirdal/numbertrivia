@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using web.Controllers;
 using web.Services;
 using web.Config;
 
@@ -32,13 +28,20 @@ namespace web
 
             var builder = new ContainerBuilder();
             services.AddTransient<INumberTriviaService, NumberTriviaService>();
-            var apiConfig = Configuration.GetSection("ApiSettings").Get<ApiConfig>();
-            
+            //var apiConfig = Configuration.GetSection("ApiSettings").Get<ApiConfig>();   
             var baseUrl = Environment.GetEnvironmentVariable("BaseUrl");
-            if(!string.IsNullOrEmpty(baseUrl))
+            var triviaUrl = Environment.GetEnvironmentVariable("TriviaUrl");
+
+            if(string.IsNullOrEmpty(baseUrl) || string.IsNullOrEmpty(triviaUrl))
             {
-                apiConfig.BaseUrl = baseUrl;
+                throw new ArgumentException("One or both expected environment variables has not been set");
             }
+
+            var apiConfig = new ApiConfig
+            {
+                BaseUrl = baseUrl,
+                TriviaUrl = triviaUrl
+            };
 
             builder.RegisterInstance(apiConfig);
 
